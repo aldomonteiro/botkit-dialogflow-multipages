@@ -1,26 +1,22 @@
-# botkit-multi-fb-pages
-This is a little project, meant to be a proof of concept, on how to deal with multiple Facebook pages using Botkit.
+# botkit-dialogflow-multi-pages
+
+I am proud to bring you botkit-dialogflow-multi-pages. A chatbot based on [botkit](https://github.com/howdyai/botkit) that can be integrated to several Facebook pages and integrate with an unique Dialogflow instance.
+
+This is project is based on the very clever [botkit-multi-fb-pages](https://github.com/danieledp/botkit-multi-fb-pages), that handles queries from several facebook pages plus [botkit-middleware-dialogflow](https://github.com/jschnurr/botkit-middleware-dialogflow), that integrates the botkit with Dialogflow.
 
 ### **The idea**
 
-The idea behind is to use a common webhook for the Facebook payloads and a pool of Botkit instances to do the rest. The common webhook will receive messages and then route them to the proper controller identified by its own url (containing the page-id). Every controller listens on localhost with a url like this:
+The idea is to integrate an instance of Dialogflow and use its configuration to postback queries from users in several facebook pages.
 
-```
-http://localhost:<PORT>/facebook/<PAGE-ID>/receive
-```
-When the bot receives a message it just let it flow down the pipeline and do the usual processing. It will answer to the right page using the token it was instantiated with.
+[Here](https://github.com/danieledp/botkit-multi-fb-pages) there are the instructions to setup several Facebook pages, so, the system can hear queries from all of them.
 
-The following env variables are used:
-```
-DEBUG= <true|false>
-FB_VERIFY_TOKEN= ....
-FB_WEBHOOK_PORT= ....
-POOL_PORT= ....
+### Usage
+
+```shell
+git clone https://github.com/aldomonteiro/botkit-dialogflow-multipages && cd botkit-dialogflow-multipages
+npm install node-env-file request express 
+npm install botkit botkit-middleware-dialogfow
+node start.js
 ```
 
-To give it a try use nginx (or equivalent) as a reverse proxy to expose the webhook endpoint and add a couple of pages in the bots-pool.js. Then run everything with: 
-```
-nodejs start.js
-```
-
-Cheers!
+Enjoy!
