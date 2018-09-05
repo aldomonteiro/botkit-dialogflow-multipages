@@ -9,13 +9,17 @@ const FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
 const POOL_PORT = process.env.POOL_PORT || 3000;
 const webserver = express();
 
+const dialogflow = require('botkit-middleware-dialogflow')({
+    keyFilename: process.env.dialogflow,  // service account private key file from Google Cloud Console
+});  
+
 const pages = [
     { // First page
-        pageID: '', // Page ID here
+        pageID: '', // Page ID here (Echobot)
         pageToken: '' // Page token here
     },
     { // Second page
-        pageID: '', // Another page ID here
+        pageID: '', // Another page ID here (Koraline)
         pageToken: '' // Another page token here
     }
     // more pages here...
@@ -45,12 +49,20 @@ for (let i = 0; i < pages.length; i++) {
         res.end();
     });
 
+    controllers[pageID].middleware.receive.use(dialogflow.receive);
     controllers[pageID].webserver = webserver;
 
     controllers[pageID].hears(['hello'], 'message_received', function(bot, message) {
         bot.reply(message, 'Hey there. I\'m '+ bot.identity.name);
     });
 
+    controllers[pageID].hears(['Default-WelcomeIntent'], 'message_received,facebook_postback', dialogflow.hears, function(
+        bot,
+        message
+      ) {
+        const replyText = message.fulfillment.text;
+        bot.reply(message, replyText);
+      });
 }
 
 webserver.listen(POOL_PORT, null, function() {
