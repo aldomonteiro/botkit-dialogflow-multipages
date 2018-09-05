@@ -1,6 +1,6 @@
 # botkit-dialogflow-multi-pages
 
-I am proud to bring you botkit-dialogflow-multi-pages. A chatbot based on [botkit](https://github.com/howdyai/botkit) that can be integrated to several Facebook pages and integrate with an unique Dialogflow instance.
+I am proud to bring you botkit-dialogflow-multi-pages. A chatbot based on [botkit](https://github.com/howdyai/botkit) that can be integrated to several Facebook pages and an unique Dialogflow instance.
 
 This is project is based on the very clever [botkit-multi-fb-pages](https://github.com/danieledp/botkit-multi-fb-pages), that handles queries from several facebook pages plus [botkit-middleware-dialogflow](https://github.com/jschnurr/botkit-middleware-dialogflow), that integrates the botkit with Dialogflow.
 
